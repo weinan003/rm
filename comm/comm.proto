@@ -37,10 +37,11 @@ message acquireResRequest{
 
 message Segment {
   string hostname = 1;
-  string hdfsHostname = 2;
-  int32 segindex = 3;
-  int32 ID = 4;
-  int32 port = 5;
+  string address = 2;
+  string hdfsHostname = 3;
+  int32 segindex = 4;
+  int32 ID = 5;
+  int32 port = 6;
 }
 
 message acquireResResponse{
@@ -58,13 +59,13 @@ service RM{
   //create a resource messager context
   rpc CreateNewResourceContext(Empty) returns(createResponse){}
 
-  //not used yet
-  rpc RegisterConnectionInRMByOID(Empty) returns(Empty) {}
-
   //
   rpc AcquireResourceFromRM(acquireResRequest) returns(acquireResResponse) {}
 
   //
   rpc ReleaseResourceFromRM(releaseResRequest) returns(Empty) {}
+
+  //
+  rpc GetSelfNetInfo(Empty) returns(Segment){}
 }
 

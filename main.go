@@ -24,15 +24,22 @@ func (s *server) CreateNewResourceContext(ctx context.Context, empty *pb.Empty) 
 
 	return reply, nil
 }
-func (s *server) RegisterConnectionInRMByOID(ctx context.Context, empty *pb.Empty) (ret *pb.Empty, err error) {
-	log.Println("RegisterConnectionInRMByOID")
-	return &pb.Empty{}, err
+
+func (s *server) GetSelfNetInfo(ctx context.Context, empty *pb.Empty) (ret *pb.Segment, err error) {
+	log.Println("Get Self Net Info")
+	ret = &pb.Segment{
+		Hostname: "localhost",
+		Address:  "127.0.0.1",
+		Port:     5432,
+	}
+	return ret, err
 }
+
 func (s *server) AcquireResourceFromRM(ctx context.Context, acquire *pb.AcquireResRequest) (reply *pb.AcquireResResponse, err error) {
 	log.Println("AcquireResourceFromRM")
 
 	reply = &pb.AcquireResResponse{}
-	reply.SegCount = 6
+	reply.SegCount = 1
 	reply.Vcore = 0.0625
 	reply.MemoryMb = 256
 
@@ -42,41 +49,6 @@ func (s *server) AcquireResourceFromRM(ctx context.Context, acquire *pb.AcquireR
 	segment.Port = 40000
 	segment.Hostname = "localhost"
 	reply.Segments = append(reply.Segments, segment)
-
-	segment = &pb.Segment{}
-	segment.ID = int32(1)
-	segment.HdfsHostname = "localhost"
-	segment.Port = 40000
-	segment.Hostname = "localhost"
-	reply.Segments = append(reply.Segments, segment)
-
-	segment = &pb.Segment{}
-	segment.ID = int32(2)
-	segment.HdfsHostname = "localhost"
-	segment.Port = 40000
-	segment.Hostname = "localhost"
-	reply.Segments = append(reply.Segments, segment)
-
-	segment2 := &pb.Segment{}
-	segment2.ID = int32(3)
-	segment2.HdfsHostname = "localhost"
-	segment2.Port = 50000
-	segment2.Hostname = "localhost"
-	reply.Segments = append(reply.Segments, segment2)
-
-	segment2 = &pb.Segment{}
-	segment2.ID = int32(4)
-	segment2.HdfsHostname = "localhost"
-	segment2.Port = 50000
-	segment2.Hostname = "localhost"
-	reply.Segments = append(reply.Segments, segment2)
-
-	segment2 = &pb.Segment{}
-	segment2.ID = int32(5)
-	segment2.HdfsHostname = "localhost"
-	segment2.Port = 50000
-	segment2.Hostname = "localhost"
-	reply.Segments = append(reply.Segments, segment2)
 
 	err = nil
 	return reply, err
