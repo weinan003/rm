@@ -48,6 +48,7 @@ func (s *server) AcquireResourceFromRM(ctx context.Context, acquire *pb.AcquireR
 	segment.HdfsHostname = "localhost"
 	segment.Port = 40000
 	segment.Hostname = "localhost"
+	segment.Address = "127.0.0.1"
 	reply.Segments = append(reply.Segments, segment)
 
 	err = nil
